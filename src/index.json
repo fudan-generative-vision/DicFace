@@ -2,60 +2,55 @@
     {
         "template": "title",
         "props": {
-            "title": "Hallo3",
-            "subtitle": "Highly Dynamic and Realistic Portrait Image Animation with Video Diffusion Transformer",
+            "title": "DicFace",
+            "subtitle": "Dirichlet-Constrained Variational Codebook Learning for Temporally Coherent Video Face Restoration",
             "authors": [
                 [
                     {
-                        "name": "Jiahao Cui",
+                        "name": "Yan Chen",
                         "homepage": "https://github.com/cuijh26",
                         "suffix": "1"
                     },
                     {
-                        "name": "Hui Li",
+                        "name": "Hanlin Shang",
                         "homepage": "https://github.com/crystallee-ai",
                         "suffix": "1"
                     },
                     {
-                        "name": "Yun Zhan",
+                        "name": "Ce Liu",
                         "homepage": "https://github.com/subazinga",
                         "suffix": "1"
                     },
                     {
-                        "name": "Hanlin Shang",
+                        "name": "Yuxuan Chen",
                         "homepage": "https://github.com/NinoNeumann",
                         "suffix": "1"
                     },
                     {
-                        "name": "Kaihui Cheng",
+                        "name": "Hui Li",
                         "homepage": "https://github.com/Kaihui-Cheng",
                         "suffix": "1"
                     },
                     {
-                        "name": "Yuqi Ma",
+                        "name": "Weihao Yuan",
                         "homepage": "https://github.com/mayuqi7777",
-                        "suffix": "1"
+                        "suffix": "2"
                     },
                     {
-                        "name": "Shan Mu",
+                        "name": "Hao Zhu",
                         "homepage": "https://github.com/AricGamma",
-                        "suffix": "1"
+                        "suffix": "3"
                     }
                 ],
                 [
                     {
-                        "name": "Hang Zhou",
+                        "name": "Zilong Dong",
                         "homepage": "https://hangz-nju-cuhk.github.io/",
                         "suffix": "2"
                     },
                     {
-                        "name": "Jingdong Wang",
-                        "homepage": "https://jingdongwang2017.github.io/",
-                        "suffix": "2"
-                    },
-                    {
                         "name": "Siyu Zhu",
-                        "homepage": "https://sites.google.com/site/zhusiyucs/home",
+                        "homepage": "https://jingdongwang2017.github.io/",
                         "suffix": "1✉️"
                     }
                 ],
@@ -66,17 +61,21 @@
                         "prefix": "1"
                     },
                     {
-                        "name": "Baidu Inc.",
+                        "name": "Alibaba Group",
                         "homepage": "",
                         "prefix": "2"
+                    },
+                    {
+                        "name": "Nanjing University",
+                        "homepage": "",
+                        "prefix": "3"
                     }
                 ]
             ],
             "resources": {
-                "pdf": "https://arxiv.org/pdf/2412.00733",
-                "arxiv": "https://arxiv.org/abs/2412.00733",
-                "github": "https://github.com/fudan-generative-vision/hallo3",
-                "huggingface": "https://huggingface.co/fudan-generative-ai/hallo3"
+                "pdf": "",
+                "arxiv": "",
+                "github": "https://github.com/fudan-generative-vision/DicFace"
             },
             "mainVideo": ""
         }
