@@ -1,0 +1,36 @@
+# 忽略操作系统生成的文件
+.DS_Store
+Thumbs.db
+
+# 忽略编译生成的文件
+*.class
+*.exe
+*.o
+*.so
+.eggs/
+*.egg-info/
+
+
+# 忽略包管理工具生成的文件
+node_modules/
+vendor/
+
+# 忽略 Python 缓存目录
+__pycache__/
+
+# 忽略日志文件
+*.log
+
+# 忽略环境配置文件
+.env
+
+# 忽略IDE/编辑器配置文件
+.idea/
+.vscode/
+
+# test folder
+test*/
+
+# ckpts
+
+ckpts/
