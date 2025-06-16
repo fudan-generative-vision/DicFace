@@ -36,7 +36,7 @@
 <table align='center' border="0" style="width: 100%; text-align: center; margin-top: 80px;">
   <tr>
     <td>
-      <video align='center' src="https://fusion-lab.oss-cn-shanghai.aliyuncs.com/DicFace/assets/supplementary_4k.mp4" muted autoplay loop></video>
+      <video align='center' src="https://github.com/user-attachments/assets/274ecc2b-3d89-4d31-bb0a-a5f3611fae8a" muted autoplay loop></video>
     </td>
   </tr>
 </table>
@@ -44,13 +44,13 @@
 ## 📸 Showcase
 
 ### BFR Task
-<video align='center' src="https://fusion-lab.oss-cn-shanghai.aliyuncs.com/DicFace/assets/BFR_h264.mp4" muted autoplay loop></video>
+<video align='center' src="https://github.com/user-attachments/assets/63907f13-0921-4dd8-a074-dce818710d59" muted autoplay loop></video>
 
 ### Inpainting Task
-<video align='center' src="https://fusion-lab.oss-cn-shanghai.aliyuncs.com/DicFace/assets/inpainting_h264.mp4" muted autoplay loop></video>
+<video align='center' src="https://github.com/user-attachments/assets/6c1aab2b-905f-4a93-acbc-e4a6b61233d9" muted autoplay loop></video>
 
 ### Colorization Task
-<video align='center' src="https://fusion-lab.oss-cn-shanghai.aliyuncs.com/DicFace/assets/Color_h264.mp4" muted autoplay loop></video>
+<video align='center' src="https://github.com/user-attachments/assets/399b5474-d565-4616-81b9-95a1df014044" muted autoplay loop></video>
 
 ## 📅️ Roadmap
 
