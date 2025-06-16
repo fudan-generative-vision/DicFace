@@ -50,7 +50,7 @@
 <video align='center' src="https://github.com/user-attachments/assets/6c1aab2b-905f-4a93-acbc-e4a6b61233d9" muted autoplay loop></video>
 
 ### Colorization Task
-<video align='center' src="https://github.com/user-attachments/assets/399b5474-d565-4616-81b9-95a1df014044" muted autoplay loop></video>
+<video align='center' src="https://github.com/user-attachments/assets/8a07bcfe-08d0-4fb3-b2f6-d826c8c82de1" muted autoplay loop></video>
 
 ## 📅️ Roadmap
 
