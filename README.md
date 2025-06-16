@@ -57,7 +57,7 @@
 | Status | Milestone                                                                                    |    ETA     |
 | :----: | :------------------------------------------------------------------------------------------- | :--------: |
 |   🚀   | **[Paper submitted on Arixiv]()**                                                            |    TBD     |
-|   🚀   | **[Inference Code release]()**                                                               |    TBD     |
+|   ✅   | **[Inference Code release]()**                                                               |  2025-6-16 |
 |   🚀   | **[Test data release]()**                                                                    |    TBD     |
 |   🚀   | **[Training Code release]()**                                                                |    TBD     |
 |   🚀   | **[Training data release]()**                                                                |    TBD     |
