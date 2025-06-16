@@ -138,7 +138,7 @@ python scripts/inference.py \
 
 ``` bash 
 # for colorization task
-python scripts/inference.py \
+python scripts/inference_color_and_inpainting.py \
 		-i /path/to/video_warped \
 		-o /path/to/output_folder \
 		--max_length 10 \
@@ -149,7 +149,7 @@ python scripts/inference.py \
 		--has_aligned
 
 # for inpainting task
-python scripts/inference.py \
+python scripts/inference_color_and_inpainting.py \
 		-i /path/to/video_warped \
 		-o /path/to/output_folder \
 		--max_length 10 \
