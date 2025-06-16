@@ -74,6 +74,7 @@ def set_realesrgan():
         )
     return upsampler
 
+
 if __name__ == "__main__":
     device = get_device()
     parser = argparse.ArgumentParser()
@@ -179,8 +180,6 @@ if __name__ == "__main__":
             face_upsampler = set_realesrgan()
     else:
         face_upsampler = None
-
-    os.makedirs(args.output_path, exist_ok=True)
 
     # ------------------ set up restorer -------------------
     net = ARCH_REGISTRY.get("TemporalCodeFormerDirDistMultiScale")(
@@ -297,8 +296,8 @@ if __name__ == "__main__":
         else:
             img = cv2.resize(img, (512, 512), interpolation=cv2.INTER_LINEAR)
             face_helper.is_gray = is_gray(img, threshold=10)
-            if face_helper.is_gray:
-                print("Grayscale input: True")
+            # if face_helper.is_gray:
+                # print("Grayscale input: True")
             face_helper.cropped_faces = [img]
 
         cropped_face_t = img2tensor(
@@ -356,9 +355,7 @@ if __name__ == "__main__":
                 small_clip, "b t c h w -> (b t) c h w", t=args.max_length
             )
             bt = small_clip.shape[0]
-            res, _, _ = net(
-                small_clip, w=weight_parameter
-            ) 
+            res, _, _ = net(small_clip, w=weight_parameter)
 
             res = rearrange(res, "(b t) c h w -> b t c h w", t=args.max_length)
 
@@ -372,101 +369,24 @@ if __name__ == "__main__":
         del output
         torch.cuda.empty_cache()
 
-    print("Pasting faces back ...")
-
-    for i, img in enumerate(input_img_list):
-        # clean all the intermediate results to process the next image
-        face_helper.clean_all()
-
-        if args.has_aligned:
-            # the input faces are already cropped and aligned
-            img = cv2.resize(img, (512, 512), interpolation=cv2.INTER_LINEAR)
-            face_helper.is_gray = is_gray(img, threshold=10)
-            if face_helper.is_gray:
-                print("Grayscale input: True")
-            face_helper.cropped_faces = [img]
-        else:
-            # align and warp each face
-            face_helper.read_image(img)
-            face_helper.all_landmarks_5 = [avg_landmarks[i]]
-            face_helper.align_warp_face()
-
-        face_helper.add_restored_face(restored_faces[i].astype("uint8"))
-
-        # paste_back
-        if not args.has_aligned:
-            # upsample the background
-            if bg_upsampler is not None:
-                # Now only support RealESRGAN for upsampling background
-                bg_img = bg_upsampler.enhance(img, outscale=args.upscale)[0]
-            else:
-                bg_img = None
-            face_helper.get_inverse_affine(None)
-            # paste each restored face to the input image
-            if args.face_upsample and face_upsampler is not None:
-                restored_img = face_helper.paste_faces_to_input_image(
-                    upsample_img=bg_img,
-                    draw_box=args.draw_box,
-                    face_upsampler=face_upsampler,
-                )
-            else:
-                restored_img = face_helper.paste_faces_to_input_image(
-                    upsample_img=bg_img, draw_box=args.draw_box
-                )
-
-            restored_img_list.append(restored_img)
-
-        # save faces
-        save_face_name = f"{i:08d}.png"
-
-        for face_idx, (cropped_face, restored_face) in enumerate(
-            zip(face_helper.cropped_faces, face_helper.restored_faces)
-        ):
-            # save cropped face
-            if not args.has_aligned:
-                save_crop_path = os.path.join(
-                    result_root, "cropped_faces", save_face_name
-                )
-                imwrite(cropped_face, save_crop_path)
-            # save restored face
-            save_restore_path = os.path.join(
-                result_root, "restored_faces", save_face_name
-            )
-            imwrite(restored_face, save_restore_path)
-
-        # save restored img
-        if not args.has_aligned and restored_img is not None:
-            save_restore_path = os.path.join(
-                result_root, "final_results", save_face_name
-            )
-            imwrite(restored_img, save_restore_path)
-
-    # save enhanced video
+    print("Saving result ...")
+    
+    output_path = result_root
+    os.makedirs(output_path, mode=0o777, exist_ok=True)
     if args.save_video:
-        print("Saving video ...")
-        # load images
-        video_frames = []
-        if not args.has_aligned:
-            img_list = sorted(
-                glob.glob(os.path.join(result_root, "final_results", "*.[jp][pn]g"))
-            )
-        else:
-            img_list = sorted(
-                glob.glob(os.path.join(result_root, "restored_faces", "*.[jp][pn]g"))
-            )
-
-        for img_path in img_list:
-            img = cv2.imread(img_path)
-            video_frames.append(img)
-
-        height, width = video_frames[0].shape[:2]
-        save_restore_path = os.path.join(args.output_path, f"{clip_name}.mp4")
-        vidwriter = VideoWriter(
-            save_restore_path, height, width, args.save_video_fps, audio=None
+        writer = cv2.VideoWriter(
+            f"{output_path}.mp4",
+            fourcc=cv2.VideoWriter_fourcc(*"mp4v"),
+            fps=args.save_video_fps,
+            frameSize=(512, 512),
         )
 
-        for f in video_frames:
-            vidwriter.write_frame(f)
-        vidwriter.close()
+    for idx, restored_img in enumerate(restored_faces):
+        img_abs_path = os.path.join(output_path, str(idx).zfill(8) + ".png")
+        cv2.imwrite(img_abs_path, restored_img, [cv2.IMWRITE_PNG_COMPRESSION, 0])
 
-    print(f"\nAll results are saved in {result_root}")
+        if args.save_video:
+            writer.write(restored_img)
+
+    if args.save_video:
+        writer.release()
