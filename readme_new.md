@@ -22,7 +22,7 @@
 
 <br>
 <div align='center'>
-    <a href='https://github.com/fudan-generative-vision/DicFace'><img src='https://img.shields.io/github/stars/fudan-generative-vision/DicFace'></a>
+    <a href='https://github.com/fudan-generative-vision/hallo3'><img src='https://img.shields.io/github/stars/fudan-generative-vision/hallo3?style=social'></a>
     <!-- <a href='https://github.com/fudan-generative-vision/DicFace/#/'><img src='https://img.shields.io/badge/Project-HomePage-Green'></a> -->
     <a href=''><img src='https://img.shields.io/badge/Paper-Arxiv-red'></a>
     <!-- <a href=''><img src='https://img.shields.io/badge/%F0%9F%A4%97%20HuggingFace-Model-yellow'></a> -->
@@ -110,60 +110,34 @@ Install packages with `pip`
 #### for blind face restoration
 
 ```bash
-python scripts/inference.py \
+python scripts/inference_bfr.py \
 		-i /path/to/video \
 		-o /path/to/output_folder \
 		--max_length 10 \
 		--save_video_fps 24 \
-		--ckpt_path /bfr/bfr_weight.pth \
+		--ckpt_path  \
 		--bg_upsampler realesrgan \
 		--save_video 
 
 # or your videos has been aligned
-python scripts/inference.py \
+python scripts/inference_bfr.py \
 		-i /path/to/video \
 		-o /path/to/output_folder \
 		--max_length 10 \
 		--save_video_fps 24 \
-		--ckpt_path /bfr/bfr_weight.pth \
+		--ckpt_path  \
 		--bg_upsampler realesrgan \
 		--save_video \
 		--has_aligned
 ```
-
-#### for colorization & inpainting task
-
-
-**The current colorization & inpainting tasks only supports input of aligned faces. If a non-aligned face is input, it may lead to unsatisfactory final results.**
-
-``` bash 
-# for colorization task
-python scripts/inference.py \
-		-i /path/to/video_warped \
-		-o /path/to/output_folder \
-		--max_length 10 \
-		--save_video_fps 24 \
-		--ckpt_path /colorization/colorization_weight.pth \
-		--bg_upsampler realesrgan \
-		--save_video \
-		--has_aligned
-
-# for inpainting task
-python scripts/inference.py \
-		-i /path/to/video_warped \
-		-o /path/to/output_folder \
-		--max_length 10 \
-		--save_video_fps 24 \
-		--ckpt_path /inpainting/inpainting_weight.pth \
-		--bg_upsampler realesrgan \
-		--save_video \
-		--has_aligned
-```
-
 
 
 ## Training
-**TBD**
+
+### Prepare data for training
+
+### Training
+
 ## 📝 Citation
 
 If you find our work useful for your research, please consider citing the paper:
