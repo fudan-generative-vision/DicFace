@@ -103,9 +103,6 @@ Install packages with `pip`
 
 ### 📥 Download Pretrained Models
 
-
-### 🛠️ Prepare Inference Data
-
 ### 🎮 Run Inference
 
 #### for blind face restoration
