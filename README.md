@@ -58,6 +58,7 @@
 | :----: | :------------------------------------------------------------------------------------------- | :--------: |
 |   🚀   | **[Paper submitted on Arixiv]()**                                                            |    TBD     |
 |   ✅   | **[Inference Code release]()**                                                               |  2025-6-16 |
+|   🚀   | **[Model Weight release]()**                                                                 |    TBD     |
 |   🚀   | **[Test data release]()**                                                                    |    TBD     |
 |   🚀   | **[Training Code release]()**                                                                |    TBD     |
 |   🚀   | **[Training data release]()**                                                                |    TBD     |
