@@ -150,7 +150,6 @@ python scripts/inference.py \
 		--max_length 10 \
 		--save_video_fps 24 \
 		--ckpt_path /bfr/bfr_weight.pth \
-		--bg_upsampler realesrgan \
 		--save_video \
 		--has_aligned
 ```
