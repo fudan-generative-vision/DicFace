@@ -24,7 +24,7 @@
 <div align='center'>
     <a href='https://github.com/fudan-generative-vision/DicFace'><img src='https://img.shields.io/github/stars/fudan-generative-vision/DicFace'></a>
     <!-- <a href='https://github.com/fudan-generative-vision/DicFace/#/'><img src='https://img.shields.io/badge/Project-HomePage-Green'></a> -->
-    <a href=''><img src='https://img.shields.io/badge/Paper-Arxiv-red'></a>
+    <a href='https://arxiv.org/abs/2506.13355'><img src='https://img.shields.io/badge/Paper-Arxiv-red'></a>
     <!-- <a href=''><img src='https://img.shields.io/badge/%F0%9F%A4%97%20HuggingFace-Model-yellow'></a> -->
     <!-- <a href='assets/wechat.jpeg'><img src='https://badges.aleen42.com/src/wechat.svg'></a> -->
 </div>
@@ -102,6 +102,32 @@ Install packages with `pip`
 ```
 
 ### 📥 Download Pretrained Models
+
+The pre-trained weights have been uploaded to Baidu Netdisk. Please download them from the [link](https://pan.baidu.com/s/1VTNbdtZDvgY0163a1T8ITw?pwd=dicf)
+
+**File Structure of Pretrained Models**
+The downloaded .ckpts directory contains the following pre-trained models:
+
+```
+.ckpts
+|-- CodeFormer                  # CodeFormer-related models
+|   |-- bfr_100k.pth            # Blind Face Restoration model 
+|   |-- color_100k.pth          # Color Restoration model 
+|   `-- inpainting_100k.pth     # Image Inpainting model
+|-- dlib                        # dlib face-related models
+|   |-- mmod_human_face_detector.dat  # Human face detector
+|   `-- shape_predictor_5_face_landmarks.dat  # 5-point face landmark predictor
+|-- facelib                     # Face processing library models
+|   |-- detection_Resnet50_Final.pth  # ResNet50 face detector 
+|   |-- detection_mobilenet0.25_Final.pth  # MobileNet0.25 face detector 
+|   |-- parsing_parsenet.pth    # Face parsing model
+|   |-- yolov5l-face.pth        # YOLOv5l face detection model
+|   `-- yolov5n-face.pth        # YOLOv5n face detection model
+|-- realesrgan                  # Real-ESRGAN super-resolution model
+|   `-- RealESRGAN_x2plus.pth   # 2x super-resolution enhancement model
+`-- vgg                         # VGG feature extraction model
+    `-- vgg.pth                 # VGG network pre-trained weights
+```
 
 ### 🎮 Run Inference
 
