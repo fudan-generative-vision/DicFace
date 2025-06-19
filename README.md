@@ -183,7 +183,11 @@ python scripts/inference_color_and_inpainting.py \
 		--has_aligned
 ```
 
+## test data
 
+our test data link: https://pan.baidu.com/s/1zMp3fnf6LvlRT9CAoL1OUw?pwd=drhh
+
+**TBD**
 
 ## Training
 **TBD**
