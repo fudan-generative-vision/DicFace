@@ -52,6 +52,14 @@
 ### Colorization Task
 <video align='center' src="https://github.com/user-attachments/assets/8a07bcfe-08d0-4fb3-b2f6-d826c8c82de1" muted autoplay loop></video>
 
+## 📰 News
+
+
+- **`2025/06/17`**: Paper submitted on Arixiv. [paper](https://arxiv.org/abs/2506.13355)
+- **`2025/06/16`**: 🎉🎉🎉 Release inference scripts
+
+
+
 ## 📅️ Roadmap
 
 | Status | Milestone                                                                                    |    ETA     |
@@ -63,9 +71,6 @@
 |   🚀   | **[Training Code release]()**                                                                |  2025-6-22 |
 
 
-## 📰 News
-
-- **`2025/06/16`**: 🎉🎉🎉 Release inference scripts
 
 ## ⚙️ Installation
 
