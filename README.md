@@ -195,3 +195,16 @@ our test data link: https://pan.baidu.com/s/1zMp3fnf6LvlRT9CAoL1OUw?pwd=drhh
 
 If you find our work useful for your research, please consider citing the paper:
 
+```
+@misc{chen2025dicfacedirichletconstrainedvariationalcodebook,
+      title={DicFace: Dirichlet-Constrained Variational Codebook Learning for Temporally Coherent Video Face Restoration}, 
+      author={Yan Chen and Hanlin Shang and Ce Liu and Yuxuan Chen and Hui Li and Weihao Yuan and Hao Zhu and Zilong Dong and Siyu Zhu},
+      year={2025},
+      eprint={2506.13355},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2506.13355}, 
+}
+
+```
+
