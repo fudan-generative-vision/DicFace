@@ -59,9 +59,8 @@
 |   ✅   | **[Inference Code release](https://github.com/fudan-generative-vision/DicFace)**             |  2025-6-16 |
 |   ✅   | **[Model Weight release， baidu-link](https://pan.baidu.com/s/1VTNbdtZDvgY0163a1T8ITw?pwd=dicf)**       |2025-6-16|
 |   ✅   | **[Paper submitted on Arixiv](https://arxiv.org/abs/2506.13355)**                            |  2025-6-17 |
-|   🚀   | **[Test data release]()**                                                                    |    TBD     |
-|   🚀   | **[Training Code release]()**                                                                |    TBD     |
-|   🚀   | **[Training data release]()**                                                                |    TBD     |
+|   🚀   | **[Test data release]()**                                                                    |  2025-6-20 |
+|   🚀   | **[Training Code release]()**                                                                |  2025-6-22 |
 
 
 ## 📰 News
