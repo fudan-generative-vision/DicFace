@@ -43,13 +43,13 @@
 
 ## 📸 Showcase
 
-### BFR Task
+### Blind Face Restoration
 <video align='center' src="https://github.com/user-attachments/assets/63907f13-0921-4dd8-a074-dce818710d59" muted autoplay loop></video>
 
-### Inpainting Task
+### Face Inpainting
 <video align='center' src="https://github.com/user-attachments/assets/6c1aab2b-905f-4a93-acbc-e4a6b61233d9" muted autoplay loop></video>
 
-### Colorization Task
+### Face Colorization
 <video align='center' src="https://github.com/user-attachments/assets/8a07bcfe-08d0-4fb3-b2f6-d826c8c82de1" muted autoplay loop></video>
 
 ## 📰 News
