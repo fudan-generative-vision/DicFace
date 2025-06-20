@@ -44,13 +44,41 @@
 ## 📸 Showcase
 
 ### Blind Face Restoration
-<video align='center' src="https://github.com/user-attachments/assets/63907f13-0921-4dd8-a074-dce818710d59" muted autoplay loop></video>
+<table align="center" width="100%" border="0" cellpadding="10">
+  <tr>
+    <td style="text-align: center;">
+      <video src="" muted autoplay loop width="480"></video>
+    </td>
+    <td style="text-align: center;">
+      <video src="" muted autoplay loop width="480"></video>
+    </td>
+  </tr>
+</table>
+
 
 ### Face Inpainting
-<video align='center' src="https://github.com/user-attachments/assets/6c1aab2b-905f-4a93-acbc-e4a6b61233d9" muted autoplay loop></video>
+<table align="center" width="100%" border="0" cellpadding="10">
+  <tr>
+    <td style="text-align: center;">
+      <video src="" muted autoplay loop width="480"></video>
+    </td>
+    <td style="text-align: center;">
+      <video src="" muted autoplay loop width="480"></video>
+    </td>
+  </tr>
+</table>
 
 ### Face Colorization
-<video align='center' src="https://github.com/user-attachments/assets/8a07bcfe-08d0-4fb3-b2f6-d826c8c82de1" muted autoplay loop></video>
+<table align="center" width="100%" border="0" cellpadding="10">
+  <tr>
+    <td style="text-align: center;">
+      <video src="" muted autoplay loop width="480"></video>
+    </td>
+    <td style="text-align: center;">
+      <video src="" muted autoplay loop width="480"></video>
+    </td>
+  </tr>
+</table>
 
 ## 📰 News
 
