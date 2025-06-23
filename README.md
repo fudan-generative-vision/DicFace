@@ -82,7 +82,7 @@
 
 ## 📰 News
 
-
+- **`2025/06/23`**: Release our pretrained model on huggingface [repo](https://huggingface.co/fudan-generative-ai/DicFace).
 - **`2025/06/17`**: Paper submitted on Arixiv. [paper](https://arxiv.org/abs/2506.13355)
 - **`2025/06/16`**: 🎉🎉🎉 Release inference scripts
 
@@ -95,8 +95,8 @@
 |   ✅   | **[Inference Code release](https://github.com/fudan-generative-vision/DicFace)**             |  2025-6-16 |
 |   ✅   | **[Model Weight release， baidu-link](https://pan.baidu.com/s/1VTNbdtZDvgY0163a1T8ITw?pwd=dicf)**       |2025-6-16|
 |   ✅   | **[Paper submitted on Arixiv](https://arxiv.org/abs/2506.13355)**                            |  2025-6-17 |
-|   🚀   | **[Test data release]()**                                                                    |  2025-6-20 |
-|   🚀   | **[Training Code release]()**                                                                |  2025-6-22 |
+|   🚀   | **[Test data release]()**                                                                    |  2025-6-24 |
+|   🚀   | **[Training Code release]()**                                                                |  2025-6-24 |
 
 
 
@@ -136,6 +136,8 @@ Install packages with `pip`
 ### 📥 Download Pretrained Models
 
 The pre-trained weights have been uploaded to Baidu Netdisk. Please download them from the [link](https://pan.baidu.com/s/1VTNbdtZDvgY0163a1T8ITw?pwd=dicf)
+
+Now you can easily get all pretrained models required by inference from our HuggingFace [repo](https://huggingface.co/fudan-generative-ai/DicFace).
 
 **File Structure of Pretrained Models**
 The downloaded .ckpts directory contains the following pre-trained models:
