@@ -234,6 +234,12 @@ our test data link: https://pan.baidu.com/s/1zMp3fnf6LvlRT9CAoL1OUw?pwd=drhh
 
 ## Training
 **TBD**
+
+
+## 🤗 Acknowledgements
+
+This project is open sourced under NTU S-Lab License 1.0. Redistribution and use should follow this license. The code framework is mainly modified from [CodeFormer](https://github.com/sczhou/CodeFormer). Please refer to the original repo for more usage and documents.
+
 ## 📝 Citation
 
 If you find our work useful for your research, please consider citing the paper:
