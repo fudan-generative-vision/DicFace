@@ -28,19 +28,8 @@
     <!-- <a href=''><img src='https://img.shields.io/badge/%F0%9F%A4%97%20HuggingFace-Model-yellow'></a> -->
     <!-- <a href='assets/wechat.jpeg'><img src='https://badges.aleen42.com/src/wechat.svg'></a> -->
 </div>
-<!-- <div align='Center'>
-    <i><strong><a href='https://cvpr.thecvf.com/Conferences/2025' target='_blank'>CVPR 2025</a></strong></i>
-</div> -->
-<br>
-<!-- 
-<table align='center' border="0" style="width: 100%; text-align: center; margin-top: 80px;">
-  <tr>
-    <td>
-      <video align='center' src="https://github.com/user-attachments/assets/274ecc2b-3d89-4d31-bb0a-a5f3611fae8a" muted autoplay loop></video>
-    </td>
-  </tr>
-</table> -->
 
+<br>
 
 <table align="center" border="0" style="width: 100%; margin-top: 80px;">
   <tr>
