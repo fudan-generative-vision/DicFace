@@ -127,8 +127,7 @@ class TransformerSALayer(nn.Module):
         tgt_key_padding_mask: Optional[Tensor] = None,
         query_pos: Optional[Tensor] = None,
     ):
-        # tgt shape already be (H W) (B T) C   C=512
-        # self attention
+
         tgt2 = self.norm1(tgt)
         q = k = self.with_pos_embed(tgt2, query_pos)
         tgt2 = self.self_attn(q,
@@ -172,10 +171,9 @@ class TransformerSALayerTemporal(nn.Module):
                 tgt_mask: Optional[Tensor] = None,
                 tgt_key_padding_mask: Optional[Tensor] = None,
                 query_pos: Optional[Tensor] = None):
-        # tgt shape (h w) (b t) c1  c1==512  (h w)==d==256
 
         tgt = rearrange(tgt, "d (b t) c -> t (b d) c", t=frame_length)
-        # self attention
+
         tgt2 = self.norm1(tgt)
         q = k = self.with_pos_embed(tgt2, query_pos)
         tgt2 = self.self_attn(q,
@@ -218,7 +216,6 @@ class Fuse_sft_block(nn.Module):
         out = dec_feat + residual
         return out
 
-# 确保 param_pred_layer 最后的输出都大于0
 class ExpModule(nn.Module):
     def forward(self, x):
         return torch.exp(x)
@@ -233,18 +230,13 @@ class MultiScaleFuse(nn.Module):
         self.out = nn.Conv2d(in_channels=256*3, out_channels=256, kernel_size=3, stride=1, padding=1)
 
     def forward(self, s64, s32, s16):
-        # s64: [bt, 256, 64, 64]
-        # s32: [bt, 256, 32, 32]
-        # s16: [bt, 256, 16, 16]
-        # [bt, c, h, w] => [bt, c*16, h//4, w//4]
+
         feat_64 = rearrange(s64, "bt c (h h1) (w w1) -> bt (c h1 w1) h w", h1=4, w1=4) 
         feat_64 = self.s64_conv(feat_64)
-        # [bt, c, h, w] => [bt, c*4, h//2, w//2]
         feat_32 = rearrange(s32, "bt c (h h1) (w w1) -> bt (c h1 w1) h w", h1=2, w1=2) 
         feat_32 = self.s32_conv(feat_32)
         feat_16 = self.s16_conv(s16)
 
-        # out =  feat_64 + feat_32 + feat_16
         out = self.out(torch.concat([feat_64, feat_32, feat_16], dim=1))
         return out
 
@@ -362,8 +354,6 @@ class TemporalCodeFormerDirDistMultiScale(VQAutoEncoder):
             module.weight.data.fill_(1.0)
 
     def forward(self, x, w=0, detach_16=True, code_only=False, adain=False):
-        # x input  shape  bt C H W  C=3 H=512 W=512
-
         # ################### Encoder #####################
         enc_feat_dict = {}
         out_list = [self.fuse_encoder_block[f_size] for f_size in self.connect_list]
@@ -372,45 +362,29 @@ class TemporalCodeFormerDirDistMultiScale(VQAutoEncoder):
             if i in out_list:
                 enc_feat_dict[str(x.shape[-1])] = x.clone()
 
-        # 256: [bt, 128, 256, 256]
-        # 128: [bt, 128, 128, 128]
-        # 64: [bt, 256, 64, 64]
-        # 32: [bt, 256, 32, 32]
-        # x: [bt, 256, 16, 16]
         lq_feat = self.multiscale(enc_feat_dict['64'], enc_feat_dict['32'], x)
 
-        # Latent shape
         bt, c, h, width = lq_feat.shape
         b = bt // self.frame_length
         t = self.frame_length
         # ################# Spatial & Temporal Transformers ###################
-        # quant_feat, codebook_loss, quant_stats = self.quantize(lq_feat) c1==512
-        spatial_pos_emb = self.position_emb.unsqueeze(1).repeat(1, bt, 1)  # shape (h w) (b t) c1
-        temporal_pos_emb = self.position_emb_temporal.unsqueeze(1).repeat(1, b*h*width, 1)  # shape T (b h w) c1
-        # (b t) c h w -> (b t) c (h w) -> (h w) (b t) c  空间
-        feat_emb = self.feat_emb(lq_feat.flatten(2).permute(2, 0, 1))  # feat_emb  shape  (h w) (b t) c1  c1==512
+        spatial_pos_emb = self.position_emb.unsqueeze(1).repeat(1, bt, 1)
+        temporal_pos_emb = self.position_emb_temporal.unsqueeze(1).repeat(1, b*h*width, 1)
+        feat_emb = self.feat_emb(lq_feat.flatten(2).permute(2, 0, 1))
         query_emb = feat_emb
-        # Transformer encoder
+
         for layer_space, layer_temporal in zip(self.ft_layers, self.dir_dist_layers):
             query_emb = layer_space(query_emb, query_pos=spatial_pos_emb)
-            query_emb = layer_temporal(query_emb, query_pos=temporal_pos_emb, frame_length=t, batch_size=b) # TODO 时间维度嵌入 先不用时间维度的位置编码。
+            query_emb = layer_temporal(query_emb, query_pos=temporal_pos_emb, frame_length=t, batch_size=b)
 
-        # output logits
-        alpha = self.idx_pred_layer(query_emb) # (hw)(bt)n
-        alpha = alpha.permute(1, 0, 2) # (hw)(bt)n -> (bt)(hw)n
-        alpha = self.softplus_layer(alpha) + 1e-2  # 确保 alpha 为正
-        #alpha = torch.sigmoid(alpha) * 3.0 + 1e-2
-        #alpha = self.softplus_layer(alpha) + 1e-2
-        #alpha = torch.nn.functional.softmax(alpha, dim=-1)
-        #alpha = torch.nn.functional.gumbel_softmax(alpha, dim=-1, hard=True) 
-        # 创建dir dist
+        alpha = self.idx_pred_layer(query_emb)
+        alpha = alpha.permute(1, 0, 2)
+        alpha = self.softplus_layer(alpha) + 1e-2
+
         dirichlet_dist = dist.Dirichlet(alpha)
-        parameters = dirichlet_dist.rsample()  # 参数采样值
+        parameters = dirichlet_dist.rsample()
 
-        #parameters = (parameters + 1e-3)
-        #parameters = parameters / parameters.sum(dim=-1, keepdim=True)
-        #parameters = alpha.clone()
-        parameters_reshaped = parameters.reshape(-1, self.codebook_size)  # () 形状变为 (bt * d, 1024)
+        parameters_reshaped = parameters.reshape(-1, self.codebook_size)
 
         if self.new_codebook_size is not None:
             quant_feat = torch.matmul(parameters_reshaped[:, :-self.new_codebook_size], self.quantize.embedding.weight) + \
@@ -420,8 +394,6 @@ class TemporalCodeFormerDirDistMultiScale(VQAutoEncoder):
 
         quant_feat = rearrange(quant_feat, "(b t h w) c -> (b t) c h w", b=b, t=t, h=h, w=width)
 
-        # if detach_16:
-        #     quant_feat = quant_feat.detach() # for training stage III
 
         if adain:
             quant_feat = adaptive_instance_normalization(quant_feat, lq_feat)
@@ -432,10 +404,9 @@ class TemporalCodeFormerDirDistMultiScale(VQAutoEncoder):
 
         for i, block in enumerate(self.generator.blocks):
             x = block(x) 
-            if i in fuse_list: # fuse after i-th block
+            if i in fuse_list:
                 f_size = str(x.shape[-1])
                 if w > 0:
                     x = self.fuse_convs_dict[f_size](enc_feat_dict[f_size].detach(), x, w)
         out = x
         return out, lq_feat, alpha + 1e-6
-        #return out, lq_feat, parameters_reshaped
