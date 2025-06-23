@@ -32,15 +32,24 @@
     <i><strong><a href='https://cvpr.thecvf.com/Conferences/2025' target='_blank'>CVPR 2025</a></strong></i>
 </div> -->
 <br>
-
+<!-- 
 <table align='center' border="0" style="width: 100%; text-align: center; margin-top: 80px;">
   <tr>
     <td>
       <video align='center' src="https://github.com/user-attachments/assets/274ecc2b-3d89-4d31-bb0a-a5f3611fae8a" muted autoplay loop></video>
     </td>
   </tr>
-</table>
+</table> -->
 
+
+<table align="center" border="0" style="width: 100%; margin-top: 80px;">
+  <tr>
+    <td style="text-align: center;">
+      <video src="https://github.com/user-attachments/assets/274ecc2b-3d89-4d31-bb0a-a5f3611fae8a" 
+             muted autoplay loop style="display: block; margin: 0 auto;"></video>
+    </td>
+  </tr>
+</table>
 ## 📸 Showcase
 
 ### Blind Face Restoration

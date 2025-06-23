@@ -308,9 +308,8 @@ class TemporalCodeFormerDirDistMultiScale(VQAutoEncoder):
             '512': 64,
         }
 
-        # after second residual block for > 16, before attn layer for ==16
+
         self.fuse_encoder_block = {'512':2, '256':5, '128':8, '64':11, '32':14, '16':18}
-        # after first residual block for > 16, before attn layer for ==16
         self.fuse_generator_block = {'16':6, '32': 9, '64':12, '128':15, '256':18, '512':21}
 
         # fuse_convs_dict
@@ -320,9 +319,6 @@ class TemporalCodeFormerDirDistMultiScale(VQAutoEncoder):
             self.fuse_convs_dict[f_size] = Fuse_sft_block(in_ch, in_ch)
 
         self.softplus_layer = nn.Softplus()
-
-        # 冻结参数==============
-        # 冻结 position_emb_spatial 参数
         self.position_emb.requires_grad = False
         print("Module: position_emb_spatial Frozen!")
 
@@ -335,14 +331,6 @@ class TemporalCodeFormerDirDistMultiScale(VQAutoEncoder):
                     else:
                         # print(f"Module: {module}, Parameter name: {param_name} Frozen!")
                         param.requires_grad = False
-
-        # 打印所有还可以训练的参数名称
-        # print("==========Trainable parameters:===========")
-        # for param_name, param in self.named_parameters():
-        #     if param.requires_grad:
-        #         print(param_name)
- 
-        # print("======================")
 
     def _init_weights(self, module):
         if isinstance(module, (nn.Linear, nn.Embedding)):
@@ -390,7 +378,7 @@ class TemporalCodeFormerDirDistMultiScale(VQAutoEncoder):
             quant_feat = torch.matmul(parameters_reshaped[:, :-self.new_codebook_size], self.quantize.embedding.weight) + \
                  torch.matmul(parameters_reshaped[:, -self.new_codebook_size:], self.new_codebook)
         else:
-            quant_feat = torch.matmul(parameters_reshaped, self.quantize.embedding.weight)  # 矩阵乘法，结果形状为 (bt * d, 256)
+            quant_feat = torch.matmul(parameters_reshaped, self.quantize.embedding.weight) 
 
         quant_feat = rearrange(quant_feat, "(b t h w) c -> (b t) c h w", b=b, t=t, h=h, w=width)
 

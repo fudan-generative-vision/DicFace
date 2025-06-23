@@ -6,7 +6,7 @@ from torchvision.models import vgg as vgg
 
 from basicsr.utils.registry import ARCH_REGISTRY
 
-VGG_PRETRAIN_PATH = '/sykj_002/workspaces/HanlinShang/FVR_Project/FVR_project/weights/vgg/vgg16-397923af.pth'
+VGG_PRETRAIN_PATH = './ckpts/vgg/vgg16-397923af.pth'
 NAMES = {
     'vgg11': [
         'conv1_1', 'relu1_1', 'pool1', 'conv2_1', 'relu2_1', 'pool2', 'conv3_1', 'relu3_1', 'conv3_2', 'relu3_2',

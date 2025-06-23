@@ -17,12 +17,12 @@ class CodeFormerDirichletVideoModel(SRModel):
     def feed_data(self, data):
         self.gt = data['gt'].to(self.device) # b t c h w
         self.input = data['in'].to(self.device)
-        self.lq = data['in'].to(self.device)  # 添加部分
+        self.lq = data['in'].to(self.device)  
         self.input_large_de = data['in'].to(self.device)
         self.b, self.t = data['gt'].shape[:2]
         # self.input_large_de = data['in_large_de'].to(self.device)
 
-        # 合并b t维度
+        # merge b t
         self.gt = rearrange(self.gt, "b t ... -> (b t) ...")
         self.input = rearrange(self.input, "b t ... -> (b t) ...")
         self.input_large_de = rearrange(self.input_large_de, "b t ... -> (b t) ...")
@@ -41,9 +41,6 @@ class CodeFormerDirichletVideoModel(SRModel):
         self.ema_decay = train_opt.get('ema_decay', 0)
         if self.ema_decay > 0:
             logger.info(f'Use Exponential Moving Average with decay: {self.ema_decay}')
-            # define network net_g with Exponential Moving Average (EMA)
-            # net_g_ema is used only for testing on one GPU and saving
-            # There is no need to wrap with DistributedDataParallel
             self.net_g_ema = build_network(self.opt['network_g']).to(self.device)
             # load pretrained model
             load_path = self.opt['path'].get('pretrain_network_g', None)
@@ -150,10 +147,6 @@ class CodeFormerDirichletVideoModel(SRModel):
         large_de = False
         self.output, lq_feat, dirichletDistParam = self.net_g(self.input, w=1.0, detach_16=True)
 
-        # if self.hq_feat_loss:
-        #     # quant_feats
-        #     quant_feat_gt = self.net_g.module.quantize.get_codebook_feat(self.idx_gt, shape=[self.b,16,16,256])
-
         l_g_total = 0
         loss_dict = OrderedDict()
         if current_iter % self.net_d_iters == 0 and current_iter > self.net_g_start_iter:
@@ -192,11 +185,6 @@ class CodeFormerDirichletVideoModel(SRModel):
             for name, param in self.net_g.named_parameters():
                 if not param.requires_grad:
                     continue
-
-                # if param.grad is None:
-                #     print(name, "f**k you!!!")
-                # elif torch.all(param.grad == 0):
-                #     print(name, "zero!!!!!")
             
             self.optimizer_g.step()
 
@@ -251,8 +239,6 @@ class CodeFormerDirichletVideoModel(SRModel):
         pbar = tqdm(total=len(dataloader), unit='image')
 
         for idx, val_data in enumerate(dataloader):
-            # img_name = osp.splitext(osp.basename(val_data['lq_path'][0]))[0]
-            # img_name = val_data["key"][0].split('/')[0]
             img_name = val_data["key"][0].split('/')[-3]
             self.feed_data(val_data)
             self.test()

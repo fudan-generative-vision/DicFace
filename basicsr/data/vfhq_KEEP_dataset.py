@@ -256,19 +256,6 @@ class VFHQRealDegradationDatasetNew(data.Dataset):
                 landmarks_str = clip_info[start_frame_idx + frame_idx].split(' ')
                 landmarks = np.array([float(x) for x in landmarks_str]).reshape(5, 2)
                 self.face_aligner.clean_all()
-
-                # debug warping
-                if False:
-                    import copy
-                    img_lq_draw = copy.deepcopy(img_lq) * 255
-                    img_gt_draw = copy.deepcopy(img_gt) * 255
-                    for idx_ in range(len(landmarks)):
-                        p_ = landmarks[idx_]
-                        cv2.circle(img_lq_draw, (int(p_[0]), int(p_[1])), 2, (0, 255, 255), -1)
-                        cv2.circle(img_gt_draw, (int(p_[0]), int(p_[1])), 2, (0, 255, 255), -1)
-                        cv2.putText(img_gt_draw, str(idx_), (int(p_[0]), int(p_[1])), 1, 1.2, (255, 0, 255), 1)
-                    cv2.imwrite(f"{index}_{frame_idx}.png", np.concatenate([img_lq_draw, img_gt_draw], axis=1))
-
                 # align and warp each face
                 img_lq, img_gt = self.face_aligner.align_pair_face(
                     img_lq, img_gt, landmarks)
@@ -289,76 +276,3 @@ class VFHQRealDegradationDatasetNew(data.Dataset):
 
     def __len__(self):
         return len(self.keys)
-
-if __name__ == "__main__":
-    import os
-    import torch
-    import numpy as np
-    from torch.utils.data import DataLoader
-    from PIL import Image
-    # 定义配置字典
-    opt = {
-        'dataroot_gt': '/sykj_002/datasets/VFHQ/VFHQ_DATAset/VFHQ_Test/TEST_DATA',  # 替换为实际的 GT 数据根路径
-        'global_meta_info_file': './celebv_test20.txt',  # 替换为实际的全局元信息文件路径
-        'dataroot_meta_info': '/sykj_002/datasets/celebv/Celebv_Text_Data/celebvtext_6_images_512x512_test20_ldmks',
-        'io_backend': {
-            'type': 'disk'              # 这里假设使用磁盘作为 IO 后端
-        },
-        'video_length': 3,              # 视频帧的数量
-        'scale': 4,                     # 下采样比例
-        'need_align': False,            # 是否需要对齐
-        'normalize': True,              # 是否进行归一化
-        'interval_list': [1, 2],        # 时间间隔列表
-        'random_reverse': True,         # 是否随机反转帧顺序
-        'use_flip': False,              # 是否使用水平翻转
-        'use_rot': False,               # 是否使用旋转
-        'blur_kernel_size': 21,         # 模糊核的大小
-        'kernel_list': ['iso', 'aniso'],  # 模糊核的类型列表
-        'kernel_prob': [0.7, 0.3],      # 模糊核类型的概率
-        'blur_x_sigma': [0.1, 10],      # 模糊核在 x 方向的标准差范围
-        'blur_y_sigma': [0.1, 10],      # 模糊核在 y 方向的标准差范围
-        'noise_range': [0, 10],         # 噪声范围
-        'resize_prob': [0.20, 0.4, 0.4],  # 不同插值方法的概率
-        'crf_range': [18, 25],          # CRF 压缩范围
-        'vcodec': ['libx264'],          # 视频编码格式
-        'vcodec_prob': [1]              # 视频编码格式的概率
-    }
-
-    # 创建数据集实例
-    dataset = VFHQRealDegradationDatasetNew(opt)
-
-    # 创建数据加载器
-    dataloader = DataLoader(dataset, batch_size=1, shuffle=False)
-
-    # 指定保存图片的文件夹
-    save_folder = 'visualized_lq_images_debug_noalign'
-    os.makedirs(save_folder, exist_ok=True)
-
-    # 从数据集中获取一个样本
-    for idx, data in enumerate(dataloader):
-        if idx > 20:
-            break
-        lq = data['in']
-        gt = data['gt']
-        key = data['key']
-
-        print(f"Low Quality (LQ) shape: {lq.shape}")
-        print(f"Ground Truth (GT) shape: {gt.shape}")
-        print(f"Key: {key}")
-
-        # [1, T, 3, H, W] => [T, 3, H, W] => [T, H, W, 3]
-        lq_np = lq.squeeze(0).permute(0, 2, 3, 1).cpu().numpy() 
-        hq_np = gt.squeeze(0).permute(0, 2, 3, 1).cpu().numpy()
-
-        if opt['normalize']:
-            lq_np = (lq_np * 0.5 + 0.5) * 255
-            hq_np = (hq_np * 0.5 + 0.5) * 255
-        lq_np = np.clip(lq_np, 0, 255).astype(np.uint8)
-        hq_np = np.clip(hq_np, 0, 255).astype(np.uint8)
-
-        for frame_idx in range(len(lq_np)):
-            frame_concat = np.concatenate([lq_np[frame_idx], hq_np[frame_idx]], axis=1)
-            frame_concat = Image.fromarray(frame_concat)
-            frame_filename = os.path.join(save_folder, f"{key[0].replace('/', '_')}_{frame_idx}.png")
-            frame_concat.save(frame_filename)
-        break
