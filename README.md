@@ -135,7 +135,7 @@ Install packages with `pip`
 
 The pre-trained weights have been uploaded to Baidu Netdisk. Please download them from the [link](https://pan.baidu.com/s/1VTNbdtZDvgY0163a1T8ITw?pwd=dicf)
 
-Now you can easily get all pretrained models required by inference from our HuggingFace [repo](https://huggingface.co/fudan-generative-ai/DicFace).
+Now you can easily get all pretrained models required by inference from our HuggingFace [repo](https://huggingface.co/fudan-generative-ai/DicFace_model).
 
 **File Structure of Pretrained Models**
 The downloaded .ckpts directory contains the following pre-trained models:
