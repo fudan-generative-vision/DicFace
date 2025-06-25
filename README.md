@@ -80,6 +80,7 @@
 
 ## 📰 News
 
+- **`2025/06/25`**: Release our test data on huggingface [repo](https://huggingface.co/datasets/fudan-generative-ai/DicFace-test_dataset).
 - **`2025/06/23`**: Release our pretrained model on huggingface [repo](https://huggingface.co/fudan-generative-ai/DicFace).
 - **`2025/06/17`**: Paper submitted on Arixiv. [paper](https://arxiv.org/abs/2506.13355)
 - **`2025/06/16`**: 🎉🎉🎉 Release inference scripts
@@ -88,13 +89,13 @@
 
 ## 📅️ Roadmap
 
-| Status | Milestone                                                                                    |    ETA     |
-| :----: | :------------------------------------------------------------------------------------------- | :--------: |
-|   ✅   | **[Inference Code release](https://github.com/fudan-generative-vision/DicFace)**             |  2025-6-16 |
-|   ✅   | **[Model Weight release， baidu-link](https://pan.baidu.com/s/1VTNbdtZDvgY0163a1T8ITw?pwd=dicf)**       |2025-6-16|
-|   ✅   | **[Paper submitted on Arixiv](https://arxiv.org/abs/2506.13355)**                            |  2025-6-17 |
-|   🚀   | **[Test data release]()**                                                                    |  2025-6-24 |
-|   🚀   | **[Training Code release]()**                                                                |  2025-6-24 |
+| Status | Milestone                                                                                              |    ETA     |
+| :----: | :----------------------------------------------------------------------------------------------------- | :--------: |
+|   ✅   | **[Inference Code release](https://github.com/fudan-generative-vision/DicFace)**                       |  2025-6-16 |
+|   ✅   | **[Model Weight release， baidu-link](https://pan.baidu.com/s/1VTNbdtZDvgY0163a1T8ITw?pwd=dicf)**       |2025-6-16   |
+|   ✅   | **[Paper submitted on Arixiv](https://arxiv.org/abs/2506.13355)**                                       |  2025-6-17 |
+|   ✅   | **[Test data release](https://huggingface.co/datasets/fudan-generative-ai/DicFace-test_dataset)**       |  2025-6-25 |
+|   🚀   | **[Training Code release]()**                                                                           |  2025-6-24 |
 
 
 
@@ -217,9 +218,10 @@ python scripts/inference_color_and_inpainting.py \
 
 ## test data
 
-our test data link: https://pan.baidu.com/s/1zMp3fnf6LvlRT9CAoL1OUw?pwd=drhh
+our test data link: https://pan.baidu.com/s/1zMp3fnf6LvlRT9CAoL1OUw?pwd=drhh .
 
-**TBD**
+You can get our test data from the huggingface [repo](https://huggingface.co/datasets/fudan-generative-ai/DicFace-test_dataset) .
+
 
 ## Training
 **TBD**
