@@ -8,7 +8,8 @@ pyyaml
 requests
 scikit-image
 scipy
-tb-nightly
+# tb-nightly
+tensorboard
 torch>=1.7.1
 torchvision
 tqdm

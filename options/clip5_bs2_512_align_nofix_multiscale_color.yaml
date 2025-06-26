@@ -1,0 +1,223 @@
+# general settings
+name: codeformer_dirichlet_clip5_bs2_align_nofix_multiscale_color
+model_type: CodeFormerDirichletVideoModel
+num_gpu: 8
+manual_seed: 0
+
+# dataset and data loader settings
+datasets:
+  train:
+    name: VFHQ-Train
+    type: ColorizationDataset
+    dataroot_gt: /sykj_002/datasets/VFHQ/VFHQ_DATAset/VFHQ_DATA_512x512
+    global_meta_info_file:  # path to your training data meta file
+    dataroot_meta_info: #
+    io_backend:
+      type: disk
+
+    video_length: 5
+    scale: 4
+    need_align: True
+    normalize: True
+    interval_list: [1]
+    random_reverse: True
+    use_flip: False
+    use_rot: False
+    # large degradation in stageII
+    # blur_kernel_size: 41
+    blur_kernel_size: 21
+    kernel_list:  ['iso', 'aniso']    # 模糊核的类型列表
+    # kernel_prob:  [0.5, 0.5]        # 模糊核类型的概率
+    kernel_prob:  [0.7, 0.3]
+    # blur_x_sigma: [0.2, 3]          # 模糊核在 x 方向的标准差范围
+    blur_x_sigma: [0.1, 10]
+    # blur_y_sigma: [0.2, 3]          # 模糊核在 y 方向的标准差范围
+    blur_y_sigma: [0.1, 10] 
+    # noise_range:  [0, 25]           # 噪声范围
+    noise_range:  [0, 10]
+    resize_prob:  [0.20, 0.40, 0.40]  # 不同插值方法的概率
+    # use_crf:      True              # 是否使用crf压缩
+    # crf_range:    [10, 30]          # CRF 压缩范围
+    crf_range:    [18, 25]
+    vcodec:       ['libx264']         # 视频编码格式
+    vcodec_prob:  [1]                 # 视频编码格式的概率
+
+    latent_gt_path: ~ # without pre-calculated latent code
+    # latent_gt_path: './experiments/pretrained_models/VQGAN/latent_gt_code1024.pth'
+
+    # data loader
+    num_worker_per_gpu: 4
+    batch_size_per_gpu: 2
+    dataset_enlarge_ratio: 10
+    prefetch_mode: ~
+
+  val:
+    name: VFHQ-Test-50
+    type: ColorizationDataset
+    # dataroot_gt: ../VFHQ_Test/VAL_cases
+    # global_meta_info_file: ./vfhq_val_data_info.txt
+    # dataroot_meta_info: ./vfhq_val_landmarks
+    dataroot_gt: /sykj_002/datasets/VFHQ/VFHQ_DATAset/VFHQ_Test/TEST_DATA
+    global_meta_info_file: ./vfhq_test.txt
+    dataroot_meta_info: /sykj_002/datasets/VFHQ/VFHQ_DATAset/VFHQ_Test/vfhq_test_landmarks
+    io_backend:
+      type: disk
+
+    video_length: 5
+    scale: 4
+    need_align: True
+    normalize: True
+    interval_list: [1]
+    random_reverse: False
+    use_flip: False
+    use_rot: False
+    # large degradation in stageII
+    blur_kernel_size: 21
+    kernel_list:  ['iso', 'aniso']    # 模糊核的类型列表
+    # kernel_prob:  [0.5, 0.5]        # 模糊核类型的概率
+    kernel_prob:  [0.7, 0.3]
+    # blur_x_sigma: [0.2, 3]          # 模糊核在 x 方向的标准差范围
+    blur_x_sigma: [0.1, 10]
+    # blur_y_sigma: [0.2, 3]          # 模糊核在 y 方向的标准差范围
+    blur_y_sigma: [0.1, 10] 
+    # noise_range:  [0, 25]           # 噪声范围
+    noise_range:  [0, 10]
+    resize_prob:  [0.20, 0.40, 0.40]  # 不同插值方法的概率
+    # use_crf:      True              # 是否使用crf压缩
+    # crf_range:    [10, 30]          # CRF 压缩范围
+    crf_range:    [18, 25]
+    vcodec:       ['libx264']         # 视频编码格式
+    vcodec_prob:  [1]                 # 视频编码格式的概率
+    # data loader
+    num_worker_per_gpu: 4
+    batch_size_per_gpu: 2
+    dataset_enlarge_ratio: 1
+    prefetch_mode: ~
+
+# network structures
+network_g:
+  type: TemporalCodeFormerDirDistMultiScale
+  dim_embed: 512
+  n_head: 8
+  n_layers: 9
+  codebook_size: 1024
+  connect_list: ['32', '64', '128', '256']
+  # fix_modules: ['encoder','quantize', 'fuse_convs_dict', 'feat_emb'] # decoder 放开, generator
+  fix_modules: []
+  # vqgan_path: './weights/CodeFormer/vqgan_code1024.pth' # pretrained VQGAN 
+  frame_length: 5
+
+# network_vqgan: # this config is needed if no pre-calculated latent
+#   type: VQAutoEncoder
+#   img_size: 512
+#   nf: 64
+#   ch_mult: [1, 2, 2, 4, 4, 8]
+#   quantizer: 'nearest'
+#   codebook_size: 1024
+
+network_d:
+  type: VQGANDiscriminator
+  nc: 3
+  ndf: 64
+  n_layers: 4
+
+# path
+path:
+  pretrain_network_g: './weights/CodeFormer/codeformer.pth'
+  param_key_g: params_ema
+  strict_load_g: false
+  pretrain_network_d: './weights/CodeFormer/vqgan_discriminator.pth'
+  strict_load_d: true
+  resume_state: ~
+
+# base_lr(4.5e-6)*bach_size(4)
+train:
+  # use_hq_feat_loss: False
+  # feat_loss_weight: 1.0
+  cross_entropy_loss: true
+  entropy_loss_weight: 0.5
+  fidelity_weight: 0
+
+  optim_g:
+    type: Adam
+    lr: !!float 5e-5
+    weight_decay: 0
+    betas: [0.9, 0.99]
+  optim_d:
+    type: Adam
+    lr: !!float 5e-5
+    weight_decay: 0
+    betas: [0.9, 0.99]
+
+  # scheduler:
+  #   type: MultiStepLR
+  #   milestones: [30000, 45000]
+  #   gamma: 0.5
+
+  scheduler:
+    type: CosineAnnealingRestartLR
+    periods: [100000]
+    restart_weights: [1]
+    eta_min: !!float 2e-5
+
+  total_iter: 100000
+
+  warmup_iter: -1  # no warm up
+  ema_decay: 0.997
+
+# training loss
+  pixel_opt:
+    type: L1Loss
+    loss_weight: 1.0
+    reduction: mean
+
+  perceptual_opt:
+    type: LPIPSLoss
+    loss_weight: 1.0
+    use_input_norm: true
+    range_norm: true
+
+  dirichletKL_opt:
+    type: DirichletKLLoss
+    loss_weight: 0.00
+    kl_coef: 0.1
+
+  gan_opt:
+    type: GANLoss
+    gan_type: hinge
+    loss_weight: !!float 1.0 # adaptive_weighting
+
+  use_adaptive_weight: true
+
+  net_g_start_iter: 0
+  net_d_iters: 1
+  net_d_start_iter: 6000000000
+  manual_seed: 0
+
+# validation settings
+val:
+  val_freq: !!float 1000 # no validation
+  save_img: true
+
+  metrics:
+    psnr: # metric name, can be arbitrary
+      type: calculate_psnr
+      crop_border: 4
+      test_y_channel: false
+
+# logging settings
+logger:
+  print_freq: 100
+  save_checkpoint_freq: !!float 1000
+  use_tb_logger: true
+  wandb:
+    mode: offline
+    project: codeformer_dirichlet_clip5_color_dloss
+    resume_id: ~
+
+# dist training settings
+dist_params:
+  backend: nccl
+  port: 29412
+
+find_unused_parameters: false

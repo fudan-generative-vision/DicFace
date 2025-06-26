@@ -1,0 +1,193 @@
+# general settings
+name: BFR_test
+model_type: CodeFormerDirichletVideoModel
+num_gpu: 1
+manual_seed: 0
+
+# dataset and data loader settings
+datasets:
+  train:
+    name: VFHQ-Train
+    type: VFHQRealDegradationDatasetNew
+    dataroot_gt: /sykj_002/datasets/VFHQ/VFHQ_DATAset/VFHQ_DATA_512x512 # replace your training data root path
+    global_meta_info_file:  ./vfhq_train_data.txt # replace with your training data meta info
+    dataroot_meta_info: /sykj_002/datasets/VFHQ/VFHQ_DATAset/vfhq_train_landmarks # replace with the landmarks info of your training data
+    io_backend:
+      type: disk
+
+    video_length: 5
+    scale: 4
+    need_align: True # make sure that dataroot_meta_info is the landmarks of your data
+    normalize: True
+    interval_list: [1]
+    random_reverse: True
+    use_flip: False
+    use_rot: False
+    blur_kernel_size: 21
+    kernel_list:  ['iso', 'aniso']
+    kernel_prob:  [0.7, 0.3]
+    blur_x_sigma: [0.1, 10]
+    blur_y_sigma: [0.1, 10] 
+    noise_range:  [0, 10]
+    resize_prob:  [0.20, 0.40, 0.40]  
+    crf_range:    [18, 25]
+    vcodec:       ['libx264']         
+    vcodec_prob:  [1]                 
+
+
+    # data loader
+    num_worker_per_gpu: 4
+    batch_size_per_gpu: 2
+    dataset_enlarge_ratio: 20
+    prefetch_mode: ~
+
+  val:
+    name: VFHQ-Test-50
+    type: VFHQRealDegradationDatasetNew
+    dataroot_gt: /sykj_002/datasets/VFHQ/VFHQ_DATAset/VFHQ_Test/TEST_DATA # replace with your test data root path
+    global_meta_info_file: ./vfhq_test.txt # test data meta
+    dataroot_meta_info: /sykj_002/datasets/VFHQ/VFHQ_DATAset/VFHQ_Test/vfhq_test_landmarks # landmark info of your test data
+    io_backend:
+      type: disk
+
+    video_length: 5
+    scale: 4
+    need_align: True
+    normalize: True
+    interval_list: [1]
+    random_reverse: False
+    use_flip: False
+    use_rot: False
+    blur_kernel_size: 21
+    kernel_list:  ['iso', 'aniso']    
+    kernel_prob:  [0.7, 0.3]
+    blur_x_sigma: [0.1, 10]
+    blur_y_sigma: [0.1, 10] 
+    noise_range:  [0, 10]
+    resize_prob:  [0.20, 0.40, 0.40] 
+    crf_range:    [18, 25]
+    vcodec:       ['libx264']        
+    vcodec_prob:  [1]                
+    # data loader
+    num_worker_per_gpu: 2
+    batch_size_per_gpu: 1
+    dataset_enlarge_ratio: 1
+    prefetch_mode: ~
+
+# network structures
+network_g:
+  type: TemporalCodeFormerDirDistMultiScale
+  dim_embed: 512
+  n_head: 8
+  n_layers: 9
+  codebook_size: 1024
+  connect_list: ['32', '64', '128', '256']
+  # fix_modules: ['encoder','quantize', 'fuse_convs_dict', 'feat_emb'] 
+  fix_modules: [] # you can fix some module 
+  frame_length: 5
+
+network_d:
+  type: VQGANDiscriminator
+  nc: 3
+  ndf: 64
+  n_layers: 4
+
+# path
+path:
+  pretrain_network_g: './ckpts/CodeFormer/codeformer.pth'
+  param_key_g: params_ema
+  strict_load_g: false
+  pretrain_network_d: './ckpts/CodeFormer/vqgan_discriminator.pth'
+  strict_load_d: true
+  resume_state: ~
+
+# base_lr(4.5e-6)*bach_size(4)
+train:
+  cross_entropy_loss: true
+  entropy_loss_weight: 0.5
+  fidelity_weight: 0
+
+  optim_g:
+    type: Adam
+    lr: !!float 5e-5
+    weight_decay: 0
+    betas: [0.9, 0.99]
+  optim_d:
+    type: Adam
+    lr: !!float 5e-5
+    weight_decay: 0
+    betas: [0.9, 0.99]
+
+  # scheduler:
+  #   type: MultiStepLR
+  #   milestones: [30000, 45000]
+  #   gamma: 0.5
+
+  scheduler:
+    type: CosineAnnealingRestartLR
+    periods: [100000]
+    restart_weights: [1]
+    eta_min: !!float 2e-5
+
+  total_iter: 100000
+
+  warmup_iter: -1  # no warm up
+  ema_decay: 0.997
+
+# training loss
+  pixel_opt:
+    type: L1Loss
+    loss_weight: 1.0
+    reduction: mean
+
+  perceptual_opt:
+    type: LPIPSLoss
+    loss_weight: 1.0
+    use_input_norm: true
+    range_norm: true
+
+  dirichletKL_opt:
+    type: DirichletKLLoss
+    loss_weight: 1.00
+    kl_coef: 0.1
+
+  gan_opt:
+    type: GANLoss
+    gan_type: hinge
+    loss_weight: !!float 1.0 # adaptive_weighting
+
+  use_adaptive_weight: true
+
+  net_g_start_iter: 0
+  net_d_iters: 1
+  net_d_start_iter: 6000000000
+  manual_seed: 0
+
+# validation settings
+val:
+  val_freq: !!float 10 # no validation
+  save_img: true
+
+  metrics:
+    psnr: # metric name, can be arbitrary
+      type: calculate_psnr
+      crop_border: 4
+      test_y_channel: false
+
+# logging settings
+logger:
+  print_freq: 1                   # Frequency (iterations) to print training logs to console
+  save_checkpoint_freq: !!float 10  # Frequency (iterations) to save model checkpoints
+  use_tb_logger: true             # Enable TensorBoard logging
+  wandb:
+    mode: offline                 # Logging mode: 'offline' (local only) or 'online' (sync to Weights & Biases) 
+                                  # Set to 'online' to upload training metrics to Weights & Biases
+    project: project_name         # WandB project name
+    resume_id: ~                  # ID to resume a previous WandB run (leave as ~ for new runs)
+
+# dist training settings
+dist_params:
+  backend: nccl
+  port: 29412
+
+find_unused_parameters: false
