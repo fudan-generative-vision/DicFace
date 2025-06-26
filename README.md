@@ -278,7 +278,7 @@ Before initiating the training process, ensure that you have completed the follo
    - All input images must be resized to 512 x 512 pixels.
 
 2. **Download Necessary Files**:
-   - Obtain the metadata files and facial landmark information from our Hugging Face repository. [Repo Link]()
+   - Obtain the metadata files and facial landmark information from our Hugging Face repository. [TBD(not ready)]
 
 3. **Configure YAML Files**:
    - Edit the configuration file located at `options/xxx.yaml` to specify your training parameters and dataset paths.
