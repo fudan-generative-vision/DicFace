@@ -1,8 +1,8 @@
 <h1 align='center'>DicFace: Dirichlet-Constrained Variational Codebook Learning for Temporally Coherent Video Face Restoration</h1>
 
 <div align='center'>
-    <a href='' target='_blank'>Yan Chen</a><sup>1</sup>&emsp;
-    <a href='' target='_blank'>Hanlin Shang</a><sup>1</sup>&emsp;
+    <a href='' target='_blank'>Yan Chen</a><sup>1*</sup>&emsp;
+    <a href='' target='_blank'>Hanlin Shang</a><sup>1*</sup>&emsp;
     <a href='' target='_blank'>Ce Liu</a><sup>1</sup>&emsp;
     <a href='' target='_blank'>Yuxuan Chen</a><sup>1</sup>&emsp;
     <a href='' target='_blank'>Hui Li</a><sup>1</sup>&emsp;
@@ -96,7 +96,7 @@
 |   ✅   | **[Model Weight release， baidu-link](https://pan.baidu.com/s/1VTNbdtZDvgY0163a1T8ITw?pwd=dicf)**       |2025-6-16   |
 |   ✅   | **[Paper submitted on Arixiv](https://arxiv.org/abs/2506.13355)**                                       |  2025-6-17 |
 |   ✅   | **[Test data release](https://huggingface.co/datasets/fudan-generative-ai/DicFace-test_dataset)**       |  2025-6-25 |
-|   🚀   | **[Training Code release]()**                                                                           |  2025-6-24 |
+|   🚀   | **[Training Code release]()**                                                                           |  2025-6-28 |
 
 
 
