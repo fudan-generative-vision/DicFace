@@ -1,8 +1,8 @@
 <h1 align='center'>DicFace: Dirichlet-Constrained Variational Codebook Learning for Temporally Coherent Video Face Restoration</h1>
 
 <div align='center'>
-    <a href='' target='_blank'>Yan Chen</a><sup>1*</sup>&emsp;
-    <a href='' target='_blank'>Hanlin Shang</a><sup>1*</sup>&emsp;
+    <a href='' target='_blank'>Yan Chen</a><sup>1</sup>&emsp;
+    <a href='' target='_blank'>Hanlin Shang</a><sup>1</sup>&emsp;
     <a href='' target='_blank'>Ce Liu</a><sup>1</sup>&emsp;
     <a href='' target='_blank'>Yuxuan Chen</a><sup>1</sup>&emsp;
     <a href='' target='_blank'>Hui Li</a><sup>1</sup>&emsp;
@@ -96,7 +96,7 @@
 |   ✅   | **[Model Weight release， baidu-link](https://pan.baidu.com/s/1VTNbdtZDvgY0163a1T8ITw?pwd=dicf)**       |2025-6-16   |
 |   ✅   | **[Paper submitted on Arixiv](https://arxiv.org/abs/2506.13355)**                                       |  2025-6-17 |
 |   ✅   | **[Test data release](https://huggingface.co/datasets/fudan-generative-ai/DicFace-test_dataset)**       |  2025-6-25 |
-|   🚀   | **[Training Code release]()**                                                                           |  2025-6-28 |
+|   🚀   | **[Training Code release]()**                                                                           |  2025-6-24 |
 
 
 
@@ -147,6 +147,8 @@ The downloaded .ckpts directory contains the following pre-trained models:
 |-- CodeFormer                  # CodeFormer-related models
 |   |-- bfr_100k.pth            # Blind Face Restoration model 
 |   |-- color_100k.pth          # Color Restoration model 
+|   |-- codeformer.pth          # codeformer model
+|   |-- vqgan_discriminator.pth # vqgan_discriminator model
 |   `-- inpainting_100k.pth     # Image Inpainting model
 |-- dlib                        # dlib face-related models
 |   |-- mmod_human_face_detector.dat  # Human face detector
@@ -264,10 +266,30 @@ python scripts/warp_images.py \
 After warping the test data, you can use the inference scripts to generate results for the test dataset.
 
 
-## Training
+### Training
 
-#### Training data
+#### Training Data
+We utilize the VFHQ dataset for both training and testing. The test data is specifically sourced from VFHQ-Test. For more details, please refer to the official project page: [VFHQ](https://liangbinxie.github.io/projects/vfhq/).
 
+### Prerequisites for Training
+Before initiating the training process, ensure that you have completed the following steps:
+
+1. **Image Size Requirement**:
+   - All input images must be resized to 512 x 512 pixels.
+
+2. **Download Necessary Files**:
+   - Obtain the metadata files and facial landmark information from our Hugging Face repository. [Repo Link]()
+
+3. **Configure YAML Files**:
+   - Edit the configuration file located at `options/xxx.yaml` to specify your training parameters and dataset paths.
+
+### Initiate Training
+Once the prerequisites are met, start the training process by executing the following command:
+```bash
+bash train.sh
+```
+
+This script will initiate the training procedure using the settings defined in your YAML configuration file.
 
 
 ## 🤗 Acknowledgements

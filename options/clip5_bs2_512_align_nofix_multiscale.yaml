@@ -9,9 +9,9 @@ datasets:
   train:
     name: VFHQ-Train
     type: VFHQRealDegradationDatasetNew
-    dataroot_gt: /sykj_002/datasets/VFHQ/VFHQ_DATAset/VFHQ_DATA_512x512 # replace your training data root path
-    global_meta_info_file:  ./vfhq_train_data.txt # replace with your training data meta info
-    dataroot_meta_info: /sykj_002/datasets/VFHQ/VFHQ_DATAset/vfhq_train_landmarks # replace with the landmarks info of your training data
+    dataroot_gt:                    # replace your training data root path
+    global_meta_info_file:          # replace with your training data meta info
+    dataroot_meta_info:             # replace with the landmarks info of your training data
     io_backend:
       type: disk
 
@@ -44,9 +44,9 @@ datasets:
   val:
     name: VFHQ-Test-50
     type: VFHQRealDegradationDatasetNew
-    dataroot_gt: /sykj_002/datasets/VFHQ/VFHQ_DATAset/VFHQ_Test/TEST_DATA # replace with your test data root path
-    global_meta_info_file: ./vfhq_test.txt # test data meta
-    dataroot_meta_info: /sykj_002/datasets/VFHQ/VFHQ_DATAset/VFHQ_Test/vfhq_test_landmarks # landmark info of your test data
+    dataroot_gt:                           # replace with your test data root path
+    global_meta_info_file:                 # test data meta
+    dataroot_meta_info:                    # landmark info of your test data
     io_backend:
       type: disk
 
@@ -83,7 +83,7 @@ network_g:
   codebook_size: 1024
   connect_list: ['32', '64', '128', '256']
   # fix_modules: ['encoder','quantize', 'fuse_convs_dict', 'feat_emb'] 
-  fix_modules: [] # you can fix some module 
+  fix_modules: []                         # you can fix some module 
   frame_length: 5
 
 network_d:
