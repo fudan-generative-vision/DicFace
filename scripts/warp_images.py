@@ -97,15 +97,7 @@ def process_single(args, face_helper, input_path, ldmk_folder_path):
 
     print(f'All results are saved in {result_root}')
 
-"""
-CUDA_VISIBLE_DEVICES=6 python warp_images.py \
-    -i vfhq_test_inpaint_input_512 \
-    -o vfhq_test_inpaint_input_512_warped
 
-CUDA_VISIBLE_DEVICES=6 python warp_images.py \
-    -i /cpfs01/projects-HDD/cfff-721febfbdfb0_HDD/public/anna/workspaces/HanlinShang/55test/Interval1_512x512_LANCZOS4 \
-    -o vfhq_test_inpaint_gt
-"""
 if __name__ == '__main__':
     device = get_device()
     parser = argparse.ArgumentParser()
@@ -120,8 +112,6 @@ if __name__ == '__main__':
                         help='Save output as video. Default: False')
     parser.add_argument('-s', '--upscale', type=int, default=1,
                         help='The final upsampling scale of the image. Default: 1')
-    # large det_model: 'YOLOv5l', 'retinaface_resnet50'
-    # small det_model: 'YOLOv5n', 'retinaface_mobile0.25'
     parser.add_argument('--detection_model', type=str, default='retinaface_resnet50',
                         help='Face detector. Optional: retinaface_resnet50, retinaface_mobile0.25, YOLOv5l, YOLOv5n, dlib. \
                 Default: retinaface_resnet50')

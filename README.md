@@ -217,15 +217,57 @@ python scripts/inference_color_and_inpainting.py \
 		--has_aligned
 ```
 
-## test data
+## Test Data  
 
-our test data link: https://pan.baidu.com/s/1zMp3fnf6LvlRT9CAoL1OUw?pwd=drhh .
+Our test data can be accessed via the following links:  
+- Baidu Netdisk: [https://pan.baidu.com/s/1zMp3fnf6LvlRT9CAoL1OUw](https://pan.baidu.com/s/1zMp3fnf6LvlRT9CAoL1OUw) (Password: `drhh`)  
+- Hugging Face Dataset: [https://huggingface.co/datasets/fudan-generative-ai/DicFace-test_dataset](https://huggingface.co/datasets/fudan-generative-ai/DicFace-test_dataset)  
 
-You can get our test data from the huggingface [repo](https://huggingface.co/datasets/fudan-generative-ai/DicFace-test_dataset) .
+
+### Directory Structure  
+The downloaded `test_data_set` directory contains the following folders:  
+```
+./test_data
+├── LR_Blind                  # Blind face restoration test image folders
+│   ├── Clip+_HebIzK_LP4+P2+C1+F16589-16715
+│   ├── ...                   # Additional test image folders
+│   └── Clip+y5OFsRIRkwc+P0+C0+F9797-9938
+│
+├── TEST_DATA                 # Ground-truth (GT) image folders
+│   ├── Clip+_HebIzK_LP4+P2+C1+F16589-16715
+│   ├── ...
+│   └── Clip+y5OFsRIRkwc+P0+C0+F9797-9938
+│
+├── vfhq_test_color_input     # Colorization test image folders
+│   ├── Clip+_HebIzK_LP4+P2+C1+F16589-16715
+│   ├── ...
+│   └── Clip+y5OFsRIRkwc+P0+C0+F9797-9938
+│
+├── vfhq_test_inpaint_input_512  # Inpainting test image folders (512x512)
+│   ├── Clip+_HebIzK_LP4+P2+C1+F16589-16715
+│   ├── ...
+│   └── Clip+y5OFsRIRkwc+P0+C0+F9797-9938
+│
+└── vfhq_test_landmarks       # Facial landmark files for warping operations
+```
+
+
+### Usage  
+To process the test data, use the `warp_images.py` script:  
+```shell
+python scripts/warp_images.py \
+    -i input_test_data_folder \        # Input folder containing test data
+    -o vfhq_test_inpaint_input_512_warped \  # Output folder for warped results
+    -l /path/to/test_data_folder/vfhq_test_landmarks  # Landmark file directory
+```  
+
+After warping the test data, you can use the inference scripts to generate results for the test dataset.
 
 
 ## Training
-**TBD**
+
+#### Training data
+
 
 
 ## 🤗 Acknowledgements
