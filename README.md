@@ -96,7 +96,7 @@
 |   ✅   | **[Model Weight release， baidu-link](https://pan.baidu.com/s/1VTNbdtZDvgY0163a1T8ITw?pwd=dicf)**       |2025-6-16   |
 |   ✅   | **[Paper submitted on Arixiv](https://arxiv.org/abs/2506.13355)**                                       |  2025-6-17 |
 |   ✅   | **[Test data release](https://huggingface.co/datasets/fudan-generative-ai/DicFace-test_dataset)**       |  2025-6-25 |
-|   🚀   | **[Training Code release]()**                                                                           |  2025-6-24 |
+|   ✅   | **[Training Code release]()**                                                                           |  2025-6-26 |
 
 
 
