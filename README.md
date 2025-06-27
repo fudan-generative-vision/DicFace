@@ -82,13 +82,21 @@
 
 <div align="center">
 
-<video src="wild_example1.mp4" muted autoplay loop width="3240"></video>
-<video src="wild_example2.mp4" muted autoplay loop width="3240"></video>
+<video src="https://github.com/user-attachments/assets/90fe03dd-b0cc-446b-bb6a-169e98c875df" muted autoplay loop width="3240"></video>
+<video src="https://github.com/user-attachments/assets/c165fca5-652b-4586-a928-2ba5bda6ae03" muted autoplay loop width="3240"></video>
 <br>
-<video src="wild_example3.mp4" muted autoplay loop width="3240"></video>
-<video src="wild_example4.mp4" muted autoplay loop width="3240"></video>
+<video src="https://github.com/user-attachments/assets/f911165d-2259-4378-828c-a4468e5fa4dc" muted autoplay loop width="3240"></video>
 <br>
-<video src="wild_example5.mp4" muted autoplay loop width="3240"></video>
+<table align="center" width="100%" border="0" cellpadding="10">
+  <tr>
+    <td style="text-align: center;">
+      <video src="https://github.com/user-attachments/assets/34eea191-f972-4b6f-9529-cc39b9831875" muted autoplay loop width="480"></video>
+    </td>
+    <td style="text-align: center;">
+      <video src="https://github.com/user-attachments/assets/b7f0466b-321d-42b5-ae70-65b4a7347698" muted autoplay loop width="480"></video>
+    </td>
+  </tr>
+</table>
 </div>
 
 ## 📰 News
