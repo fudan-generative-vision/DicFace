@@ -39,7 +39,7 @@
     </td>
   </tr>
 </table>
-## 📸 Showcase
+## 🖼️ Showcase
 
 ### Blind Face Restoration
 <table align="center" width="100%" border="0" cellpadding="10">
@@ -77,6 +77,19 @@
     </td>
   </tr>
 </table>
+
+### 🐾 Wild Data Examples
+
+<div align="center">
+
+<video src="wild_example1.mp4" muted autoplay loop width="3240"></video>
+<video src="wild_example2.mp4" muted autoplay loop width="3240"></video>
+<br>
+<video src="wild_example3.mp4" muted autoplay loop width="3240"></video>
+<video src="wild_example4.mp4" muted autoplay loop width="3240"></video>
+<br>
+<video src="wild_example5.mp4" muted autoplay loop width="3240"></video>
+</div>
 
 ## 📰 News
 
@@ -258,9 +271,9 @@ The downloaded `test_data_set` directory contains the following folders:
 To process the test data, use the `warp_images.py` script:  
 ```shell
 python scripts/warp_images.py \
-    -i input_test_data_folder \        # Input folder containing test data
-    -o vfhq_test_inpaint_input_512_warped \  # Output folder for warped results
-    -l /path/to/test_data_folder/vfhq_test_landmarks  # Landmark file directory
+    -i input_test_data_folder \
+    -o vfhq_test_inpaint_input_512_warped \
+    -l /path/to/test_data_folder/vfhq_test_landmarks
 ```  
 
 After warping the test data, you can use the inference scripts to generate results for the test dataset.
