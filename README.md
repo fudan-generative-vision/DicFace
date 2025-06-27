@@ -1,8 +1,8 @@
 <h1 align='center'>DicFace: Dirichlet-Constrained Variational Codebook Learning for Temporally Coherent Video Face Restoration</h1>
 
 <div align='center'>
-    <a href='' target='_blank'>Yan Chen</a><sup>1</sup>&emsp;
-    <a href='' target='_blank'>Hanlin Shang</a><sup>1</sup>&emsp;
+    <a href='' target='_blank'>Yan Chen</a><sup>1*</sup>&emsp;
+    <a href='' target='_blank'>Hanlin Shang</a><sup>1*</sup>&emsp;
     <a href='' target='_blank'>Ce Liu</a><sup>1</sup>&emsp;
     <a href='' target='_blank'>Yuxuan Chen</a><sup>1</sup>&emsp;
     <a href='' target='_blank'>Hui Li</a><sup>1</sup>&emsp;
