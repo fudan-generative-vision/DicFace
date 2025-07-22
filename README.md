@@ -39,6 +39,7 @@
     </td>
   </tr>
 </table>
+
 ## 🖼️ Showcase
 
 ### Blind Face Restoration
