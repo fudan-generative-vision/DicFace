@@ -20,6 +20,10 @@
     <sup>3</sup>Nanjing University&emsp;
 </div>
 
+<div align='Center'>
+<i><strong><a href='https://iccv.thecvf.com/Conferences/2025' target='_blank'>ICCV 2025</a></strong></i>
+</div>
+
 <br>
 <div align='center'>
     <a href='https://github.com/fudan-generative-vision/DicFace'><img src='https://img.shields.io/github/stars/fudan-generative-vision/DicFace'></a>
