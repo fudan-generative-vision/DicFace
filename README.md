@@ -21,7 +21,7 @@
 </div>
 
 <div align='Center'>
-<i><strong><a href='https://iccv.thecvf.com/Conferences/2025' target='_blank'>ICCV 2025</a></strong></i>
+<i><strong><a href='https://iccv.thecvf.com/Conferences/2025' target='_blank'>ICCV 2025 Highlight</a></strong></i>
 </div>
 
 <br>
@@ -106,6 +106,7 @@
 
 ## 📰 News
 
+- **`2025/07/25`**: 🎉🎉🎉 Our paper has been accepted to [ICCV 2025](https://iccv.thecvf.com/Conferences/2025)and selected as a highlight.
 - **`2025/06/26`**: 🎉🎉🎉 Our paper has been accepted to [ICCV 2025](https://iccv.thecvf.com/Conferences/2025).
 - **`2025/06/25`**: Release our test data on huggingface [repo](https://huggingface.co/datasets/fudan-generative-ai/DicFace-test_dataset).
 - **`2025/06/23`**: Release our pretrained model on huggingface [repo](https://huggingface.co/fudan-generative-ai/DicFace).
